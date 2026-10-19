@@ -6,6 +6,18 @@ When a skill library grows past a few hundred entries, the in-context `name: des
 
 `find-local-skill.py` indexes `SKILL.md` frontmatter on disk across `.agents/skills`, `.claude/skills`, and `.cursor/skills`, ranks matches by name and description coverage, flags whether each hit is invocable in a loaded tree, and reports head-noun collision clusters. It uses Python's standard library only, with no embeddings, API keys, or network calls.
 
+## Authorship and upstream work
+
+I maintain the local search/ranking tooling and this skill collection. The collection includes imported skills, local adaptations, and entries with unresolved origins. I do not claim to have written every skill.
+
+- **Project tooling:** `scripts/find-local-skill.py` provides the local indexer and ranker.
+- **Vendored / imported skills:** upstream-based bundles retain their authorship and license evidence. An import label does not imply a pristine upstream copy.
+- **Adapted skills:** source-derived or locally modified instructions credit the upstream sources where recorded.
+- **Locally created skills:** local-creation claims are labeled as unverified unless original authorship can be established.
+- **Unresolved entries:** ambiguous local copies and missing source records are marked explicitly.
+
+See the [per-skill provenance catalogue](PROVENANCE.md), [machine-readable origins](provenance.json), and [third-party notices](THIRD_PARTY_NOTICES.md).
+
 ## Usage
 
 ```bash
@@ -39,4 +51,4 @@ python scripts/find-local-skill.py --selftest
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) covers project-owned tooling and original contributions. Imported and adapted skills retain their upstream terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
