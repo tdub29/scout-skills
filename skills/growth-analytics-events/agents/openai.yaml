@@ -1,0 +1,3 @@
+display_name: Growth Analytics Events
+short_description: Event schema and instrumentation workflow for growth and funnel analytics.
+default_prompt: Instrument and validate event emissions across marketing and product flows.

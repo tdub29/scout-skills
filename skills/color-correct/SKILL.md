@@ -1,0 +1,159 @@
+---
+name: color-correct
+description: Grade a video file with your AI agent as the colorist â€” it looks at frames, diagnoses casts/exposure/saturation, authors a readable ffmpeg grade, previews side-by-side, iterates, renders. Non-destructive. Nine named looks (Golden Hour, Honey, Linen, Super 8, Oat Milk, Espresso, Velvet, Popsicle, Terracotta) reverse-engineered from creators with great color, each shipped as a .cube LUT too. Use when the user says "color correct this", "/color-correct", "make this look good", "apply Oat Milk to this clip", "show me all the looks on this video", or "make my footage look like [creator]" (Steal mode via --like). ALWAYS starts by showing the menu â€” a contact sheet of all nine looks on the user's own footage, each look rendered on one or two frames of the footage (two â€” e.g. talking head + differently-lit b-roll â€” whenever scenes vary, so a look that flatters one scene but wrecks another is caught) â€” before applying anything; a requested look or AI recommendation is marked on the sheet for confirmation. Steal mode fits new looks from a reference.
+---
+
+# Color Correct â€” AI colorist skill
+
+Grade a video file with your AI agent as the colorist: it **looks at frames**, diagnoses what's wrong, authors a grade as a readable ffmpeg filter chain, previews side-by-side, iterates, renders. Non-destructive (writes a new file), audio stream-copied.
+
+The core idea: the agent's superpower isn't running ffmpeg filters â€” it's the **closed loop**. Extract frames â†’ look â†’ grade â†’ extract again â†’ compare â†’ adjust. Never render blind; never trust a preset without eyeballing it on the actual footage.
+
+## Ways to use it
+
+**âš ï¸ THE MENU COMES FIRST â€” ALWAYS.** Whatever the user asked for, the first thing they see is the contact sheet of all nine looks rendered on *their* footage â€” **each look shown on two different frames** (a talking head + a b-roll / differently-lit scene), because a look that flatters one scene can wreck another. Color is chosen with eyes, not words â€” a look name means nothing until you've seen it on your own frames. No look is applied and nothing full-renders before the user has picked from the menu.
+
+**1. "Apply Oat Milk to this clip"** â†’ render the menu with **Oat Milk marked as the requested look**, show it, ask "this one, or did another catch your eye?" â€” then apply their confirmation.
+
+**2. "Show me all the looks"** â†’ the menu, which was happening anyway.
+
+**3. "Color correct this" / "make this look good"** â†’ diagnose (content type, casts, exposure, saturation), do the Fix pass if needed, then render the menu **on the corrected frame** with the AI's recommendation marked and a one-line reason ("cozy desk light â†’ Honey"). User picks; AI's pick is a default, not a decision.
+
+The only menu-free path: a pure neutral **Fix** with no look at all ("just fix the white balance") â€” nothing to choose from there.
+
+## Inputs
+- Path to a video file (ask if not given).
+- Optional: a look name, `menu` (contact sheet), or nothing (AI decides).
+- Optional: a reference (YouTube URL / screenshot) for Steal mode â€” see below.
+
+## Tooling
+- `ffmpeg` filters: `colortemperature`, `eq`, `colorbalance`, `curves`, `vibrance`, `unsharp`, `hue`, `lut3d`
+- `scripts/measure.py` â€” grade fingerprint of a frame (luma percentiles, per-band casts, saturation)
+- `scripts/consensus.py` â€” multi-frame median fingerprint (for Steal mode)
+- `yt-dlp` â€” for pulling reference sections in Steal mode
+- The agent's eyes â€” the actual instrument
+
+## Working directory
+`/tmp/color-correct/<basename>/` â€” keep frames + the grade chain for debugging.
+
+---
+
+## The grade fingerprint (what to measure)
+
+`python3 scripts/measure.py frame.jpg` prints, per frame:
+- **luma p1/p10/p50/p90/p99** â†’ exposure (p50), contrast (p90âˆ’p10 spread), matte-ness (p1 > 8 = lifted blacks), highlight ceiling (p99 < 245 = pulled whites)
+- **per-band RGB casts** (shadows 0â€“64 / mids 64â€“160 / highs 160â€“255) â†’ Râˆ’B = warm/cool tilt, G offset = green/magenta tilt, *per tonal band* (split-toning lives here)
+- **mean saturation** + p90 saturation
+
+Numbers back the eyes; eyes make the call. Always read the frame images too â€” casts hide in skin and neutrals, and stats can't see "this looks cheap".
+
+## Workflow
+
+### Step 0 â€” Probe + sample
+`ffprobe` for codec, bit depth, color space/transfer (**flag log footage** â€” D-Log/HLG needs a conversion LUT *first*). Extract 4â€“6 frames across the runtime (lighting changes mid-video more often than you think):
+```bash
+for t in 2 15 40 ...; do ffmpeg -y -ss $t -i IN.mp4 -frames:v 1 -q:v 2 /tmp/color-correct/$NAME/src_${t}s.jpg; done
+```
+
+### Step 1 â€” Diagnose (look + measure)
+Read the frames. Run `measure.py`. Name what's wrong in plain words *before* touching filters: "green webcam cast in mids, blacks crushed, skin under-saturated". **Classify the content**: talking head, b-roll, screen recording, mixed edit. Screen recordings and UI captures should NOT be graded hard â€” a look that flatters skin will yellow a white webpage. Mixed edits get a conservative global grade.
+
+### Step 2 â€” Author the grade
+Write the chain as an ordered, commented list the user can approve.
+
+**Correction order (always this order):**
+1. `colortemperature=temperature=N` â€” kill the WB cast
+2. `colorbalance` â€” residual green/magenta tint
+3. `eq=brightness/contrast/gamma` â€” exposure + contrast (brightness Â±0.06 max; prefer gamma for mids)
+4. `vibrance=intensity=N` â€” saturation that protects already-saturated px + skin (prefer over `eq=saturation`)
+5. `curves` â€” matte lift / highlight rolloff / per-channel split-tones (last)
+
+### Step 2b â€” The looks
+
+Nine looks, each reverse-engineered from a creator whose color work we admire â€” via **consensus fingerprinting** (median grade fingerprint over ~18 frames across 3 different videos per creator; only the *invariants* survive, scene-driven casts are discarded). Credits in the README.
+
+**Strength: the chains below are the SUBTLE (~50%) versions â€” the shipping default.** Full-strength consensus references are in the table's last column as multipliers. Go full only when the user asks for "more" or the footage is very flat. If a side-by-side screams, halve everything.
+
+| Look | Character | Chain (subtle, default) |
+|---|---|---|
+| **Golden Hour** | filmic warmth, rolled-off whites, green-gold highlights | `colortemperature=temperature=6150,curves=master='0/0.018 0.6/0.59 1/0.94',colorbalance=rs=0.015:gh=0.015,vibrance=intensity=0.08` |
+| **Honey** | soft warm matte, gentle contrast | `colortemperature=temperature=6050,curves=master='0/0.023 0.5/0.5 1/0.95',vibrance=intensity=0.04,colorbalance=gm=0.01:gh=0.01` |
+| **Linen** | soft rolled whites, quiet warmth, magenta-leaning highlights | `curves=master='0/0.018 0.5/0.5 1/0.915',colortemperature=temperature=6100,colorbalance=gh=-0.015,eq=saturation=0.965` |
+| **Super 8** | film-stock compression, warm, heavy highlight rolloff | `curves=master='0/0.02 0.5/0.51 1/0.9',colortemperature=temperature=5900,colorbalance=gs=-0.01:gm=-0.01,vibrance=intensity=0.05` |
+| **Oat Milk** | creamy editorial: warm shadows â†’ cool milky highlights (inverted split-tone) | `curves=master='0/0.035 0.5/0.51 1/0.915',colorbalance=rs=0.02:rm=0.015:rh=-0.03:bh=0.025,eq=saturation=0.985` |
+| **Espresso** | moody: darker mids, warm skin against neutral shadows | `eq=contrast=1.03:saturation=0.95,colorbalance=rm=0.025:bm=-0.015,curves=master='0/0.02 0.5/0.485 1/0.94'` |
+| **Velvet** | lifted matte blacks, pulled whites, warm mids | `curves=master='0/0.035 0.5/0.5 1/0.935',colortemperature=temperature=6000,colorbalance=gs=-0.01:gh=0.015,vibrance=intensity=0.04` |
+| **Popsicle** | bright pop: full whites, punchy spread, sunny highlights | `eq=brightness=0.01:contrast=1.03,curves=master='0/0.025 0.5/0.515 1/1',vibrance=intensity=0.06,colorbalance=gh=0.015` |
+| **Terracotta** | warm + contrasty, magenta-leaning shadows, rich | `eq=contrast=1.035,colortemperature=temperature=5850,colorbalance=gs=-0.02:gm=-0.01,curves=master='0/0.01 0.5/0.5 1/0.99'` |
+
+**Full strength** = double every parameter's distance from neutral (temp toward the value 2Ã— further from 6500, curve offsets Ã—2, colorbalance Ã—2, vibrance Ã—2, contrast 1.03 â†’ 1.06, saturation 0.95 â†’ 0.9).
+
+**Faster path:** every look also exists as a `.cube` LUT in `luts/{subtle,full}/` â€” `lut3d=luts/subtle/golden-hour.cube` applies identically to the chain (verified ~1/255). Use the chains when you need to *adapt* a look to the footage; use the LUTs for straight application or for handing to an NLE. Regenerate after editing chains: `scripts/gen_luts.sh` (uses `scripts/chain2cube.py`, HALD-CLUT method â€” per-pixel filters only, no spatial filters like `unsharp` in a LUT-able chain).
+
+### Step 2c â€” The menu (MANDATORY GATE â€” no look is applied before this)
+Every run that could end in a look goes through the menu, built on **one or two frames**: **two whenever the footage has more than one scene or lighting situation** (the default for real videos) â€” a single frame lies: a look that flatters a warm talking-head face can yellow a white-walled b-roll or a screen/UI shot. One frame is acceptable only for visually uniform footage (a single static talking-head setup). Pick **two frames that differ in content or lighting** (e.g. a talking head with skin + a b-roll / differently-lit scene; for a mixed edit, deliberately pick the two that stress the grade most â€” the warm A-roll and the white-walled/UI b-roll). If a Fix pass was needed, render the menu on the **corrected** frames.
+
+For each look, render it on **both** frames, stack the two into one vertical tile, label the tile **once**, then tile the look-tiles into a grid (include an `Original` tile and, when a Fix is in play, a `Neutral fix` tile):
+```bash
+# per look, per frame: ffmpeg -y -i frameN.jpg -vf "$CHAIN,scale=900:-2" -q:v 2 lookN.jpg
+# vstack the two graded frames into one tile, label once (PIL), then grid the look-tiles
+```
+Show the sheet and STOP â€” the user picks with their eyes before anything is applied. If the user named a look, mark it on the sheet ("you asked for Oat Milk â€” confirm or switch"); in auto mode, mark the AI recommendation with its one-line reason. (Labeling via PIL is the portable path â€” many ffmpeg builds ship without `drawtext`.)
+
+### Step 2d â€” AI recommends (auto mode â€” recommendation, not decision)
+The agent's decision tree, whose output is the **marked default on the menu**, never a silent application:
+1. **Footage has a cast / exposure problem** â†’ Fix first, always.
+2. **Content is a screen recording or mixed edit** â†’ conservative fix only, or nothing. Say why.
+3. **Talking head, clean** â†’ recommend the look whose character fits the content's energy (bright tutorial â†’ Popsicle; cozy desk â†’ Honey/Velvet; cinematic vlog â†’ Golden Hour/Super 8; editorial â†’ Oat Milk/Linen; moody tech â†’ Espresso). Name the reasoning in one line on the menu.
+4. After the user picks from the menu: side-by-side preview, then the full render.
+
+### Step 2e â€” Steal mode (fit a new look from any creator)
+A single reference frame confounds the *grade* with the *scene* (a warm cabin frame reads as a warm grade). The grade is what stays constant while scenes change:
+1. **Sample wide**: 2â€“3 videos from the channel, different environments. 3 sections each, 2 frames per section â†’ ~18 frames. Use `yt-dlp -f "bv*[height<=1080][vcodec^=avc1]"` (AV1 section downloads can produce undecodable files). Contact-sheet the frames â€” drop motion graphics / screen recordings / title cards before measuring.
+2. `python3 scripts/consensus.py <dir>` â†’ per-frame stats + MEDIAN + IQR. **Read the IQR like a signal**: tight IQR = grade signature; wide IQR = scene-driven, IGNORE it.
+3. Author the chain from the invariants only. Typical real signatures: highlight rolloff point, saturation ceiling, black floor, small consistent band tints (Â±3â€“10). Typical fakes: big warmth (weather), casts that flip sign between scenes.
+4. Verify side-by-side on the target footage, 2â€“3 iterations. Save the fitted look at subtle strength.
+
+### Step 3 â€” Preview (never full-render first)
+Confirm the chosen grade on **two different frames** (the same two the menu used, or another content/lighting pair) â€” a grade that holds on one scene can break on another:
+```bash
+ffmpeg -y -ss T -t 5 -i IN.mp4 -vf "$CHAIN" -c:v libx264 -crf 18 preview.mp4
+# per frame: ffmpeg -y -i src_frameN.jpg -i graded_frameN.jpg -filter_complex hstack sbs_N.jpg
+# then stack sbs_1 over sbs_2 into one before/after image spanning both frames
+```
+Read the side-by-side. Check in order: **skin first**, then neutrals (walls/whites), then blacks, then overall vibe. Re-measure the graded frames â€” did the numbers move where predicted? Show the user (both frames) before the full render.
+
+### Step 3.5 â€” Skin gate (MANDATORY when a person is in frame)
+Eyes are the first check; this makes it mechanical:
+```bash
+python3 scripts/skincheck.py src_frame.jpg graded_frame.jpg
+```
+Detects skin pixels in the original (tightened YCbCr box + saturation bounds â€” the classic box false-positives on beige walls) and measures how the grade moved them:
+- **PASS** (exit 0) â€” hue shift < 6Â°, sat change < 25% â†’ proceed
+- **SOFTEN** (exit 1) â€” halve the look strength, re-render the preview, re-check
+- **FAIL** (exit 2) â€” the grade breaks skin. Don't just soften: diagnose. Usually means WB wasn't corrected first, or the look is wrong for this footage.
+- **SKIP** â€” <2% skin in frame (b-roll): judge by neutrals instead.
+
+Run the gate on 2â€“3 frames across the runtime (lighting changes move skin too). White balance is protected by the same mechanism upstream: the Fix pass neutralizes casts *before* any look, and the gate catches it if that step was skipped â€” a look on top of a cast fails the hue check immediately.
+
+### Step 4 â€” Render
+```bash
+ffmpeg -y -hwaccel videotoolbox -i IN.mp4 -vf "$CHAIN,format=yuv420p" \
+  -c:v libx264 -preset fast -crf 18 \
+  -c:a copy -movflags +faststart OUT_graded.mp4
+```
+Audio stream-copied; bt709 tags preserved. Verify frame pairs at 3 timestamps across the runtime.
+
+## Taste rules
+- **Correct, then grade.** A look on top of a cast = the cast, warmer.
+- **Skin is the referee.** Any move that breaks skin loses.
+- **Subtle wins.** If the side-by-side screams, halve everything.
+- **Matte = lifted blacks + pulled whites**, not low contrast.
+- **Split-tone via `colorbalance` bands**, warmth via `colortemperature`, mids via `gamma` â€” one job per filter, in order.
+- **Never grade log footage directly** â€” convert (lut3d) first.
+- Don't grade UI/screen-recordings hard; white interfaces show every cast.
+
+## Gotchas (earned the hard way)
+- **`curves` needs anchors at both ends** (`0/x ... 1/y`) â€” a single-point curve extrapolates into a blown-out frame.
+- **macOS bash 3.2 silently breaks `declare -A`** (all keys collapse to index 0). Use `case` statements in download scripts.
+- **Renderer color-shift paranoia check**: encoders (x264 vs hardware) don't shift color (<0.3/255 measured) â€” but color *metadata* does. Preserve bt709/range tags; judge grades in the player your audience uses (browsers â‰  QuickTime gamma).

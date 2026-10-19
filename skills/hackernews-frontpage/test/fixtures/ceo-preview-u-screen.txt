@@ -1,0 +1,39 @@
+  No design doc was found for this branch. Per the skill workflow:
+
+â—Â User answered Claude's questions:
+  âŽ¿ Â Â· No design doc found for this branch. `/office-hours` produces a structured problem statement, premise challenge,
+     and explored alternatives â€” it gives this review much sharper input. Takes ~10 minutes. Want to run it first? â†’
+     Skip â€” proceed with standard review
+
+â— Proceeding with standard review. Now Step 0C-bis â€” the plan's implementation approach selection is mandatory before
+  mode selection.
+
+  The plan proposes building a StripePaymentWebhookHandler. I've analyzed three possible approaches:
+
+  Premise: The plan's Database Access section explicitly says userId goes "directly into a raw SQL fragment" â€” and the
+  contracts section confirms the adapter "performs no SQL-format validation" and "does not cast, escape, or SQL-sanitize
+  it." This is a deliberate architectural choice in the current plan that makes it unshippable as written.
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ â˜ Approach
+
+â”‚ D1 â€” Which implementation approach should this plan use? <gstack-qid:plan-ceo-approach-selection>
+
+â¯ 1. A) Current plan as-is        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+  2. B) Parameterized queries     â”‚ APPROACH A: Current Plan                                               â”‚
+    + email rescue + tests +      â”‚   Risk:    HIGH                                                        â”‚
+    batch query (recommended)     â”‚   Pros:    - Smallest diff                                             â”‚
+  3. C) Approach B + async        â”‚            - Minimal new code                                          â”‚
+    queue for email fan-out       â”‚   Cons:    - SQL injection (plan explicitly states no sanitization)    â”‚
+                                  â”‚            - Email exception after DB commit â†’ HTTP 500                â”‚
+                                  â”‚              â†’ Stripe retries â†’ dedup blocks â†’ email silently lost     â”‚
+                                  â”‚            - N+1 query on orders                                       â”‚
+                                  â”‚            - Zero test coverage on payment path                        â”‚
+                                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                                  Notes: press n to add notes
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· n to add notes Â· Esc to cancel

@@ -1,0 +1,39 @@
+  saved view"). The existing filter UI is the hook point. The DB, auth middleware, and project-scoped permission model
+  are pre-existing leverage. No need to rebuild any of these.
+
+  Step 0C â€” Dream State Mapping:
+  CURRENT STATE           THIS PLAN                   12-MONTH IDEAL
+  Users recreate    --->  Personal named views    --->  Team-shared views + pinned
+  filters every           per project/member,           project defaults + cross-
+  session by hand         CRUD API, view picker         project view templates
+                          beside filter bar
+
+  The plan moves solidly toward the ideal but stops at personal views. Team-shared views and defaults are one level up.
+
+  Now: implementation alternatives before mode selection.
+
+â—Â User answered Claude's questions:
+  âŽ¿ Â Â· Which implementation approach should this plan take? â†’ Approach A: Server-side personal views (as planned)
+     (Recommended)
+
+â— Approach A confirmed. Now: mode selection for the review.
+  
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ â˜ Review mode
+
+Which review mode should I use for this plan?
+
+â¯ 1. SELECTIVE EXPANSION â€”        â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    baseline + cherry-pick        â”‚ SELECTIVE EXPANSION                             â”‚
+    (Recommended)                 â”‚   Hold scope. Bullet-proof it.                  â”‚
+  2. HOLD SCOPE â€” maximum         â”‚   Then surface expansions one at a time.        â”‚
+    rigor, no expansions          â”‚   You opt in or out of each. No surprises.      â”‚
+  3. SCOPE EXPANSION â€” dream      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+    big
+  4. SCOPE REDUCTION â€” strip      Notes: press n to add notes
+    to essentials
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· n to add notes Â· Esc to cancel

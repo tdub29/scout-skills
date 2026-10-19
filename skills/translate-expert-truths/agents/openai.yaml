@@ -1,0 +1,4 @@
+interface:
+  display_name: "Translate Expert Truths"
+  short_description: "Turn provable expertise into audience stakes"
+  default_prompt: "Use $translate-expert-truths to turn verified product truths into audience-relevant claims without losing precision."

@@ -1,0 +1,39 @@
+       9 dimension, get individual decisions, and convert approved fixes into implementation
+      10 tasks.
+     â€¦ +340 lines (ctrl+o to expand)
+
+â— Writing the plan-mode plan file, then raising Issue 1.
+
+â— Updated plan
+  âŽ¿ Â /plan to preview
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ â˜ Save button
+
+â”‚ D1 â€” Gap 1 (Visual Hierarchy): Should we add the DESIGN.md primary button style for Save as a P1 implementation task?
+â”‚ <gstack-qid:plan-design-review-gap1-visual-hierarchy>
+
+â¯ 1. Apply DESIGN.md token â€”      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    P1 task (Recommended)         â”‚ BEFORE (all 4 identical):                          â”‚
+  2. Defer to a follow-up         â”‚ [ Save ] [ Reset ] [ Cancel ] [ Export ]           â”‚
+    iteration                     â”‚                                                    â”‚
+                                  â”‚ AFTER (DESIGN.md-aligned):                         â”‚
+                                  â”‚ [â–  Save ] [ Reset ] [ Cancel ] [ Export ]          â”‚
+                                  â”‚     â†‘                  â†‘                           â”‚
+                                  â”‚   filled           ghost buttons                   â”‚
+                                  â”‚   #1d4ed8                                          â”‚
+                                  â”‚   white text                                       â”‚
+                                  â”‚                                                    â”‚
+                                  â”‚ ELI10: Right now all 4 buttons look the same.      â”‚
+                                  â”‚ DESIGN.md already says Save = filled blue,         â”‚
+                                  â”‚ others = outlined/ghost. This task wires           â”‚
+                                  â”‚ that up. Low effort, high user impact.             â”‚
+                                  â”œâ”€â”€â”€ âœ‚ â”€â”€â”€ 5 lines hidden â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+                                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+                                  Notes: press n to add notes
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· n to add notes Â· Esc to cancel

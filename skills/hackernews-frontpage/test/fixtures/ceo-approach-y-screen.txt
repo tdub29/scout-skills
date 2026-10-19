@@ -1,0 +1,39 @@
+      10 **Files touched recently:** PLAN.md, CLAUDE.md only.
+     â€¦ +89 lines (ctrl+o to expand)
+
+â— Now I'll present the first decision â€” approach selection (Step 0C-bis). I've completed internal analysis of 0A, 0B,
+  and 0C. The plan has a textbook SQL injection on the critical payment path.
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+Planning:
+/tmp/gstack-paid-shard-38V9gy/tmp/gstack-hermetic-2351339-GfM888/with-skills/.claude/plans/magical-dazzling-waterfall.md
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ â˜ Approach
+
+â”‚ D1 â€” Which implementation approach for the payment webhook handler? <gstack-qid:plan-ceo-review-approach>
+
+â¯ 1. A) Minimal Viable
+     Fix the SQL injection (parameterized query for userId lookup) and add a rescue/catch block around the email call.
+     Smallest diff, fastest to ship. Completeness: 6/10 â€” happy path only, no tests, N+1 query and WebhookDispatcher
+     bypass remain as known debt.ï¿½ï¿½âœ…  Surgical change â€” easy to review, easy to revert if the feature flag needs to roll
+     backï¿½âœ…  Fixes the one non-negotiable blocker: SQL injection. Email errors can no longer cascade to HTTP 500 and
+     trigger Stripe retriesï¿½âŒ  Zero automated tests on a payment flow â€” regressions will surface in production, not
+     CIï¿½âŒ  N+1 order-fetch loop stays; WebhookDispatcher bypass stays as architectural debt
+  2. B) Proper Integration
+     Everything in A, plus: register the handler through the existing WebhookDispatcher module instead of bypassing it.
+     Completeness: 7/10 â€” happy path + architectural correctness, still no test coverage.ï¿½ï¿½âœ…  Eliminates the
+     architectural fragmentation â€” future Stripe event types plug into the dispatcher naturallyï¿½âœ…  SQL injection fixed,
+     email bounded â€” all of A's must-fixes, plus namespace consistencyï¿½âŒ  Still no automated tests for the payment flow;
+     CI cannot catch regressions on this pathï¿½âŒ  Requires reading WebhookDispatcher internals before implementing â€”
+     slightly wider blast radius
+  3. C) Production-Grade (recommended)
+     Everything in B, plus: unit + integration tests for the handler, fix the N+1 order-fetch with a bulk query, move
+     the notification email to async delivery (queue or background job). Completeness: 10/10.ï¿½ï¿½âœ…  Zero silent failures â€”
+     every path is tested, observable, and bounded. Payment flows have zero defect toleranceï¿½âœ…  The extra scope over A
+     is ~25 min of CC time. With AI coding, "do it right" costs nearly the same as "do it quick"ï¿½âŒ  Async email delivery
+     requires confirming whether a queue or background-job infrastructure already existsï¿½âŒ  Largest diff of the three â€”
+     more review surface, though each piece is individually straightforward
+  4. Type something.
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  5. Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· Esc to cancel

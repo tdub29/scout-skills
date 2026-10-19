@@ -1,0 +1,23 @@
+{
+  "provenance": {
+    "runId": 34636708803,
+    "headSha": "dc0af5e44ff25e9dcee30e8f987f3d8986a05731",
+    "testName": "/review coverage audit",
+    "recordedAttemptOutcomes": [
+      "failed",
+      "failed"
+    ],
+    "paidOutcomesReclassified": false,
+    "source": "Exact first ASCII fence from each successful parent result; full captured transcripts retained under .context/ci-fixes-20260911/eval-final-dc0af5e4."
+  },
+  "diagrams": [
+    {
+      "attempt": 1,
+      "text": "```\nsrc/billing.ts                                              test/billing.test.ts\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\n\nprocessPayment(amount, currency)                            describe('processPayment')\nâ”‚\nâ”œâ”€ [âœ“] happy path: amount > 0, currency âˆˆ {USD, EUR}  â”€â”€â”€â–º  'processes valid payment'\nâ”‚        return { status: 'success', ... }                   (only asserts .status; USD only,\nâ”‚                                                             EUR branch never exercised)\nâ”‚\nâ”œâ”€ [âœ—] amount <= 0  â†’ throw 'Invalid amount'         â”€â”€â”€â–º  (no test)   [line 3]\nâ”‚        â””â”€ boundary: amount === 0                          (no test)\nâ”‚        â””â”€ negative: amount < 0                            (no test)\nâ”‚\nâ””â”€ [âœ—] currency âˆ‰ {USD, EUR} â†’ throw 'Unsupported currency' â”€â–º (no test) [line 4]\n         â””â”€ 'EUR' accepted branch                           (no test)\n\n\nrefundPayment(paymentId, reason)                            (no describe block â€”\nâ”‚                                                            not even imported)\nâ”œâ”€ [âœ—] happy path â†’ { status: 'refunded', ... }       â”€â”€â”€â–º  (no test)   [line 11]\nâ”‚\nâ”œâ”€ [âœ—] !paymentId â†’ throw 'Payment ID required'       â”€â”€â”€â–º  (no test)   [line 9]\nâ”‚\nâ””â”€ [âœ—] !reason    â†’ throw 'Reason required'           â”€â”€â”€â–º  (no test)   [line 10]\n\n\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•\nLegend:  [âœ“] covered   [âœ—] gap\nPaths:   1 / 7 covered  (14%)     Guard clauses: 0 / 4 tested     Functions: 1 / 2 touched\n```"
+    },
+    {
+      "attempt": 2,
+      "text": "```\nTest Coverage Map â€” src/billing.ts  (tests: test/billing.test.ts)\n\nLegend:  [âœ“] covered by a test    [âœ—] GAP â€” no test exercises this path\n\nprocessPayment(amount, currency)                        billing.ts:2\nâ”‚\nâ”œâ”€â”€ amount <= 0  â†’ throw 'Invalid amount'               billing.ts:3\nâ”‚     [âœ—] GAP  Missing Negative-Path â€” guard clause never hit\nâ”‚              (no test for 0 or negative amount)\nâ”‚\nâ”œâ”€â”€ currency âˆ‰ {USD, EUR} â†’ throw 'Unsupported currency' billing.ts:4\nâ”‚     [âœ—] GAP  Missing Negative-Path â€” guard clause never hit\nâ”‚              (no test for e.g. 'GBP' / '')\nâ”‚\nâ””â”€â”€ happy path â†’ { status:'success', amount, currency }  billing.ts:5\n      [âœ“] covered  'processes valid payment'             billing.test.ts:6\n          (only USD exercised; EUR branch of the\n           currency check is never taken â€” partial)\n\nrefundPayment(paymentId, reason)                        billing.ts:8\nâ”‚     [âœ—] GAP  Coverage Gaps â€” exported function with\nâ”‚              ZERO tests; not even imported by the test file\nâ”‚\nâ”œâ”€â”€ !paymentId â†’ throw 'Payment ID required'            billing.ts:9\nâ”‚     [âœ—] GAP  Missing Negative-Path\nâ”‚\nâ”œâ”€â”€ !reason â†’ throw 'Reason required'                   billing.ts:10\nâ”‚     [âœ—] GAP  Missing Negative-Path\nâ”‚\nâ””â”€â”€ happy path â†’ { status:'refunded', paymentId, reason } billing.ts:11\n      [âœ—] GAP  Coverage Gaps â€” success path untested\n\nâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\nSummary\n  Functions:      1 / 2 touched by tests          (50%)\n  Branches:       1 / 6 exercised                 (17%)\n  Error paths:    0 / 4 tested                    ( 0%)\n  Happy paths:    1 / 2 tested                    (50%)\nâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\n```"
+    }
+  ]
+}

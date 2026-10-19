@@ -1,0 +1,39 @@
+â”‚ D1 â€” Add skill routing rules to CLAUDE.md? <gstack-qid:routing-injection>
+â”‚
+â”‚ Project/branch: gstack-autoplan-chain-309S8Y / main â€” User Dashboard plan about to enter full review pipeline.
+â”‚
+â”‚ ELI10: When you type something natural like "review my plan" or "check the design," gstack can automatically pick the
+â”‚ right skill (/autoplan, /plan-design-review, etc.) without you needing to type the exact slash command. This works
+â”‚ through routing rules in your project's CLAUDE.md. Right now no CLAUDE.md exists here, so automatic routing isn't
+â”‚ active. This is a one-time setup that benefits the whole team.
+â”‚
+â”‚ Stakes if we pick wrong: Low â€” you can always add routing rules later or remove them. Without routing, you manually
+â”‚ invoke skills; with routing, natural language triggers them.
+â”‚
+â”‚ Recommendation: A â€” hands-free skill dispatch beats remembering slash commands.
+â”‚ Note: options differ in kind, not coverage â€” no completeness score.
+â”‚
+â”‚ Pros / cons:
+â”‚ A) Add routing to CLAUDE.md (Recommended)
+â”‚   âœ…  Natural language triggers skills automatically â€” type "review the plan" and the right skill fires without exact
+â”‚ command syntax
+â”‚   âœ…  Committed to repo â€” teammates using gstack get the same routing with no extra setup
+â”‚   âŒ  Adds a CLAUDE.md file (and a commit) to the repo; routing opinions are baked in and would need to be updated if
+â”‚ your skill preferences change
+â”‚ B) Skip â€” invoke manually
+â”‚   âœ…  Zero new files or commits; no routing opinions imposed on the repo
+â”‚   âœ…  Explicit control â€” you choose which skill runs each time
+â”‚   âŒ  Must always type exact slash commands like /autoplan or /ship; natural language won't trigger skills
+â”‚
+â”‚ Net: Convenience vs. explicitness â€” routing makes gstack hands-free; skipping keeps it a consciously invoked tool.
+
+â¯ 1. Add routing rules (Recommended)
+     Append skill routing section to CLAUDE.md and commit it. Enables natural language skill dispatch for you and
+     teammates.
+  2. Skip, invoke manually
+     No CLAUDE.md changes. Continue using explicit slash commands like /autoplan, /ship, /review.
+  3. Type something.
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  4. Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· Esc to cancel

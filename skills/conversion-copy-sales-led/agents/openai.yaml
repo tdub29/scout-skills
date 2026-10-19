@@ -1,0 +1,3 @@
+display_name: Conversion Copy Sales Led
+short_description: Sales-led conversion copy patterns for upgrade prompts and pricing flows.
+default_prompt: Write precise upgrade and pricing conversion copy tied to entitlement constraints and user value.

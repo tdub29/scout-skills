@@ -1,0 +1,46 @@
+# diagram-render
+
+Offline diagram rendering for make-pdf and /diagram. One self-contained HTML
+page (`dist/diagram-render.html`, ~9MB) bundles mermaid, the excalidraw export
+utilities, and the official mermaidâ†’excalidraw converter. Callers open it
+through `lib/aside-render.ts` (the TypeScript API make-pdf embeds) or
+`bin/gstack-render.ts` (the CLI the /diagram skill runs) â€” in the Aside browser
+when it is running, otherwise in gstack's own headless browser (the browse
+daemon; `ENGINE=` on the CLI's first line says which). Either way the page's
+directory is served on 127.0.0.1 for one render, `--eval` calls the page API,
+and `--out` copies each result out (strings verbatim, data URLs as bytes).
+
+The built page is **committed** (eng-review D2): rendering works with zero
+network at install time and render time, and there is no npm supply-chain
+surface in `./setup`. The drift test (`test/diagram-render-drift.test.ts`)
+fails CI if `dist/` is edited by hand or falls out of sync with `BUILD_INFO.json`.
+
+## Page API (window functions)
+
+| Function | In â†’ Out |
+|---|---|
+| `__renderMermaid(id, text)` | mermaid text â†’ SVG string. `id` must be unique per fence (`mermaid-fence-<n>`) â€” it namespaces every internal SVG id. |
+| `__mermaidToExcalidraw(text)` | mermaid text â†’ `.excalidraw` scene JSON (flowcharts and sequence diagrams as editable elements; other types fall back to one image element and log `Error processing Mermaid diagram` to the console). |
+| `__excalidrawToSvg(sceneJson)` | scene JSON â†’ SVG string (Excalifont embedded, offline). |
+| `__rasterize(svg, targetWidthPx)` | SVG â†’ PNG data URL. Callers own DPI math: `targetWidthPx = placed width (in) Ã— 300`. Throws on tainted canvas. |
+| `__downscaleRaster(dataUri, targetWidthPx, mime)` | raster data URI â†’ smaller data URI at `targetWidthPx` (same mime). make-pdf uses it to normalize oversized photos to print resolution. |
+| `__mountForScreenshot(svg, px)` | taint-proof fallback: mounts SVG at `#raster-stage` for `gstack-render --screenshot out.png --selector '#raster-stage'`. |
+| `__probeImage(src)` | data URI/URL â†’ `{width, height}` JSON. |
+| `__bundleInfo` | `{ name, deps }` â€” pinned dependency versions baked at build. |
+
+Readiness: poll until `#status` text is `ready` (or `gstack-render ... --wait-selector '#done'`).
+Page errors accumulate in `window.__errors`.
+
+## Updating
+
+```bash
+# 1. edit the exact pin in package.json
+cd lib/diagram-render && bun install
+# 2. rebuild (deterministic; build twice â†’ same sha)
+bun run build
+# 3. commit package.json + bun.lock + dist/ together
+```
+
+Render contract details (securityLevel strict, htmlLabels false, print-css font
+lock, `<base href>` + `</scri` escaping) are documented in `src/entry.ts` and
+`scripts/build.ts` â€” read both before touching either.

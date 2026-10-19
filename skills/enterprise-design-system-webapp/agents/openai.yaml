@@ -1,0 +1,3 @@
+display_name: Enterprise Design System Webapp
+short_description: Design tokens and layout patterns for enterprise marketing and product UX.
+default_prompt: Apply the shared design system and responsive primitives across routes and core components.

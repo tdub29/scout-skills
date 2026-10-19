@@ -1,0 +1,39 @@
+         o TODO/FIXME comments.
+     â€¦ +442 lines (ctrl+o to expand)
+
+â— Now I have a clear picture of the plan's critical issues. Following the skill workflow, I need to start the question
+  chain. First: no design doc was found, so I must offer /office-hours before proceeding.
+
+â—Â User answered Claude's questions:
+  âŽ¿ Â Â· D1 â€” No design doc found for this branch. Run /office-hours first or proceed directly with the review?
+     <gstack-qid:plan-ceo-review-prereq-skill> â†’ Skip â€” proceed with standard review (Recommended)
+ 
+â— Skipping /office-hours â€” proceeding with standard review. Now the key decision: which implementation approach to use.
+
+â—Â User answered Claude's questions:
+  âŽ¿ Â Â· D2 â€” Which implementation approach should this plan use? The current plan (Approach A) has a documented SQL
+     injection vulnerability and zero tests. <gstack-qid:plan-ceo-review-approach> â†’ Approach B: Fix security + tests,
+     keep inline email (Recommended)
+
+â— Approach B selected â€” fix security + tests within the existing scope. Now selecting the review mode.
+ 
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+ â˜ Review mode
+
+â”‚ D3 â€” Which review mode should we use for this plan? The plan adds a new payment webhook handler (a concrete, scoped
+â”‚ feature). We've selected Approach B (fix security within existing scope). <gstack-qid:plan-ceo-review-mode>
+
+â¯ 1. HOLD SCOPE â€” make it         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    bulletproof (Recommended)     â”‚ Mode: HOLD SCOPE                                â”‚
+  2. SELECTIVE EXPANSION â€”        â”‚ Scope baseline: StripePaymentWebhookHandler     â”‚
+    hold scope + surface          â”‚ Goal: Parameterized SQL, explicit email rescue, â”‚
+    extras                        â”‚       handler tests, N+1 fix                    â”‚
+  3. SCOPE REDUCTION â€” strip      â”‚ No new features surfaced                        â”‚
+    to minimum                    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+  4. SCOPE EXPANSION â€” dream
+    bigger                        Notes: press n to add notes
+
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Chat about this
+
+Enter to select Â· â†‘/â†“ to navigate Â· n to add notes Â· Esc to cancel

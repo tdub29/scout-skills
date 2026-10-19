@@ -1,0 +1,174 @@
+---
+name: data-context-extractor
+description: >
+  Generate or improve a company-specific data analysis skill by extracting tribal knowledge from analysts.
+
+  BOOTSTRAP MODE - Triggers: "Create a data context skill", "Set up data analysis for our warehouse",
+  "Help me create a skill for our database", "Generate a data skill for [company]"
+  â†’ Discovers schemas, asks key questions, generates initial skill with reference files
+
+  ITERATION MODE - Triggers: "Add context about [domain]", "The skill needs more info about [topic]",
+  "Update the data skill with [metrics/tables/terminology]", "Improve the [domain] reference"
+  â†’ Loads existing skill, asks targeted questions, appends/updates reference files
+
+  Use when data analysts want Claude to understand their company's specific data warehouse,
+  terminology, metrics definitions, and common query patterns.
+---
+
+# Data Context Extractor
+
+A meta-skill that extracts company-specific data knowledge from analysts and generates tailored data analysis skills.
+
+## How It Works
+
+This skill has two modes:
+
+1. **Bootstrap Mode**: Create a new data analysis skill from scratch
+2. **Iteration Mode**: Improve an existing skill by adding domain-specific reference files
+
+---
+
+## Bootstrap Mode
+
+Use when: User wants to create a new data context skill for their warehouse.
+
+### Phase 1: Database Connection & Discovery
+
+**Step 1: Identify the database type**
+
+Ask: "What data warehouse are you using?"
+
+Common options:
+- **BigQuery**
+- **Snowflake**
+- **PostgreSQL/Redshift**
+- **Databricks**
+
+Use `~~data warehouse` tools (query and schema) to connect. If unclear, check available MCP tools in the current session.
+
+**Step 2: Explore the schema**
+
+Use `~~data warehouse` schema tools to:
+1. List available datasets/schemas
+2. Identify the most important tables (ask user: "Which 3-5 tables do analysts query most often?")
+3. Pull schema details for those key tables
+
+Sample exploration queries by dialect:
+```sql
+-- BigQuery: List datasets
+SELECT schema_name FROM INFORMATION_SCHEMA.SCHEMATA
+
+-- BigQuery: List tables in a dataset
+SELECT table_name FROM `project.dataset.INFORMATION_SCHEMA.TABLES`
+
+-- Snowflake: List schemas
+SHOW SCHEMAS IN DATABASE my_database
+
+-- Snowflake: List tables
+SHOW TABLES IN SCHEMA my_schema
+```
+
+### Phase 2: Core Questions (Ask These)
+
+After schema discovery, ask conversationally (not all at once) about: entity disambiguation (critical), primary identifiers, key metrics, data hygiene, and common gotchas. Wording and what to listen for: `references/core-questions.md`.
+
+### Phase 3: Generate the Skill
+
+Create a skill with this structure:
+
+```
+[company]-data-analyst/
+â”œâ”€â”€ SKILL.md
+â””â”€â”€ references/
+    â”œâ”€â”€ entities.md          # Entity definitions and relationships
+    â”œâ”€â”€ metrics.md           # KPI calculations
+    â”œâ”€â”€ tables/              # One file per domain
+    â”‚   â”œâ”€â”€ [domain1].md
+    â”‚   â””â”€â”€ [domain2].md
+    â””â”€â”€ dashboards.json      # Optional: existing dashboards catalog
+```
+
+**SKILL.md Template**: See `references/skill-template.md`
+
+**SQL Dialect Section**: See `references/sql-dialects.md` and include the appropriate dialect notes.
+
+**Reference File Template**: See `references/domain-template.md`
+
+### Phase 4: Package and Deliver
+
+1. Create all files in the skill directory
+2. Package as a zip file
+3. Present to user with summary of what was captured
+
+---
+
+## Iteration Mode
+
+Use when: User has an existing skill but needs to add more context.
+
+### Step 1: Load Existing Skill
+
+Ask user to upload their existing skill (zip or folder), or locate it if already in the session.
+
+Read the current SKILL.md and reference files to understand what's already documented.
+
+### Step 2: Identify the Gap
+
+Ask: "What domain or topic needs more context? What queries are failing or producing wrong results?"
+
+Common gaps:
+- A new data domain (marketing, finance, product, etc.)
+- Missing metric definitions
+- Undocumented table relationships
+- New terminology
+
+### Step 3: Targeted Discovery
+
+For the identified domain:
+
+1. **Explore relevant tables**: Use `~~data warehouse` schema tools to find tables in that domain
+2. **Ask domain-specific questions**:
+   - "What tables are used for [domain] analysis?"
+   - "What are the key metrics for [domain]?"
+   - "Any special filters or gotchas for [domain] data?"
+
+3. **Generate new reference file**: Create `references/[domain].md` using the domain template
+
+### Step 4: Update and Repackage
+
+1. Add the new reference file
+2. Update SKILL.md's "Knowledge Base Navigation" section to include the new domain
+3. Repackage the skill
+4. Present the updated skill to user
+
+---
+
+## Reference File Standards
+
+Each reference file documents tables, metrics, or entities with fixed fields. Field lists: `references/reference-file-standards.md`.
+
+---
+
+---
+
+## Quality Checklist
+
+Before delivering a generated skill, verify:
+
+- [ ] SKILL.md has complete frontmatter (name, description)
+- [ ] Entity disambiguation section is clear
+- [ ] Key terminology is defined
+- [ ] Standard filters/exclusions are documented
+- [ ] At least 2-3 sample queries per domain
+- [ ] SQL uses correct dialect syntax
+- [ ] Reference files are linked from SKILL.md navigation section
+
+## References
+
+- `references/core-questions.md`: load in Bootstrap Phase 2 when interviewing the analyst.
+- `references/reference-file-standards.md`: load when writing or reviewing table, metric, or entity reference files.
+- `references/skill-template.md`: load in Phase 3 when writing the generated SKILL.md.
+- `references/domain-template.md`: load when writing a per-domain reference file.
+- `references/sql-dialects.md`: load in Phase 3 to add the right dialect notes.
+- `references/example-output.md`: load to see a complete generated skill (ShopCo on Snowflake).
+- `scripts/package_data_skill.py`: run in Phase 4 to package the generated skill as a zip.
