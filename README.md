@@ -6,6 +6,20 @@ When a skill library grows past a few hundred entries, the in-context `name: des
 
 `find-local-skill.py` indexes `SKILL.md` frontmatter on disk across `.agents/skills`, `.claude/skills`, and `.cursor/skills`, ranks matches by name and description coverage, flags whether each hit is invocable in a loaded tree, and reports head-noun collision clusters. It uses Python's standard library only, with no embeddings, API keys, or network calls.
 
+## How discovery works
+
+```mermaid
+flowchart LR
+    A["SKILL.md files on disk"] --> B["Index names and descriptions"]
+    Q["Task in plain language"] --> C["Rank by name and description coverage"]
+    B --> C
+    C --> D["Flag invocability"]
+    D --> E["Ranked local matches"]
+    B -.-> F["Collision clusters with --clusters"]
+```
+
+The ranker searches locally and reports which matches are available in a loaded skill tree.
+
 ## Authorship and upstream work
 
 I maintain the local search/ranking tooling and this skill collection. The collection includes imported skills, local adaptations, and entries with unresolved origins. I do not claim to have written every skill.
