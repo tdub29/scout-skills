@@ -241,8 +241,8 @@
       "source_type": "local",
       "recorded_source": "local/self",
       "book": null,
-      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained.",
-      "upstream_url": null,
+      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained. Publisher repository recovered from the bundled README GitHub link and confirmed on GitHub. The exact vendored baseline revision remains unknown; original recorded_source is preserved.",
+      "upstream_url": "https://github.com/YouMind-OpenLab/ai-image-prompts-skill",
       "recorded_upstream_revision": null,
       "revision_verified": false,
       "upstream_skill_path": null,
@@ -250,7 +250,9 @@
       "license_frontmatter": null,
       "bundled_root_notices": [
         "LICENSE"
-      ]
+      ],
+      "upstream_link_evidence": "Publisher repository recovered from the bundled README GitHub link and confirmed on GitHub.",
+      "upstream_link_reviewed": "2026-10-19"
     },
     {
       "name": "ai-seo",
@@ -3194,16 +3196,18 @@
       "source_type": "local",
       "recorded_source": "local/self",
       "book": null,
-      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained.",
-      "upstream_url": null,
+      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained. Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC. The exact vendored baseline revision remains unknown; original recorded_source is preserved.",
+      "upstream_url": "https://github.com/anthropics/skills",
       "recorded_upstream_revision": null,
       "revision_verified": false,
-      "upstream_skill_path": null,
+      "upstream_skill_path": "skills/docx/SKILL.md",
       "author_frontmatter": "Anthropic, PBC (bundled copyright notice)",
       "license_frontmatter": "Proprietary. LICENSE.txt has complete terms",
       "bundled_root_notices": [
         "LICENSE.txt"
-      ]
+      ],
+      "upstream_link_evidence": "Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC.",
+      "upstream_link_reviewed": "2026-10-19"
     },
     {
       "name": "domain",
@@ -8379,16 +8383,18 @@
       "source_type": "local",
       "recorded_source": "local/self",
       "book": null,
-      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained.",
-      "upstream_url": null,
+      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained. Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC. The exact vendored baseline revision remains unknown; original recorded_source is preserved.",
+      "upstream_url": "https://github.com/anthropics/skills",
       "recorded_upstream_revision": null,
       "revision_verified": false,
-      "upstream_skill_path": null,
+      "upstream_skill_path": "skills/pptx/SKILL.md",
       "author_frontmatter": "Anthropic, PBC (bundled copyright notice)",
       "license_frontmatter": "Proprietary. LICENSE.txt has complete terms",
       "bundled_root_notices": [
         "LICENSE.txt"
-      ]
+      ],
+      "upstream_link_evidence": "Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC.",
+      "upstream_link_reviewed": "2026-10-19"
     },
     {
       "name": "pre-launch-site-check",
@@ -11247,8 +11253,8 @@
       "source_type": "local",
       "recorded_source": "local/self",
       "book": null,
-      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained.",
-      "upstream_url": null,
+      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained. Publisher repository recovered from the bundled README clone command and confirmed on GitHub. The exact vendored baseline revision remains unknown; original recorded_source is preserved.",
+      "upstream_url": "https://github.com/manzxiao/text-to-image-prompt-optimizer",
       "recorded_upstream_revision": null,
       "revision_verified": false,
       "upstream_skill_path": null,
@@ -11256,7 +11262,9 @@
       "license_frontmatter": null,
       "bundled_root_notices": [
         "LICENSE"
-      ]
+      ],
+      "upstream_link_evidence": "Publisher repository recovered from the bundled README clone command and confirmed on GitHub.",
+      "upstream_link_reviewed": "2026-10-19"
     },
     {
       "name": "text-to-lottie",
@@ -12521,16 +12529,18 @@
       "source_type": "local",
       "recorded_source": "local/self",
       "book": null,
-      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained.",
-      "upstream_url": null,
+      "source_note": "Bundled upstream copyright contradicts the local-creation source claim; classified as imported. Original source record retained. Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC. The exact vendored baseline revision remains unknown; original recorded_source is preserved.",
+      "upstream_url": "https://github.com/anthropics/skills",
       "recorded_upstream_revision": null,
       "revision_verified": false,
-      "upstream_skill_path": null,
+      "upstream_skill_path": "skills/xlsx/SKILL.md",
       "author_frontmatter": "Anthropic, PBC (bundled copyright notice)",
       "license_frontmatter": "Proprietary. LICENSE.txt has complete terms",
       "bundled_root_notices": [
         "LICENSE.txt"
-      ]
+      ],
+      "upstream_link_evidence": "Canonical publisher repository and matching skill verified on GitHub; bundled copyright identifies Anthropic, PBC.",
+      "upstream_link_reviewed": "2026-10-19"
     },
     {
       "name": "youtube-thumbnail",

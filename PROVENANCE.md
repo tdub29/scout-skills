@@ -39,7 +39,7 @@ Machine-readable fields and recorded upstream revisions are in [provenance.json]
 | [agent-design-audit](skills/agent-design-audit/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
 | [agent-reach](skills/agent-reach/SKILL.md) | Vendored / imported | [source](https://github.com/Panniantong/Agent-Reach) | Not recorded | Not recorded | Not recorded |
 | [ai-co-scientist](skills/ai-co-scientist/SKILL.md) | Vendored / imported | [source](https://github.com/sundial-org/skills) | Not recorded | Not recorded | Not recorded |
-| [ai-image-prompts-skill](skills/ai-image-prompts-skill/SKILL.md) | Vendored / imported | See source record; not resolved to a verified URL | YouMind-OpenLab (bundled copyright notice) | Not recorded | [LICENSE](skills/ai-image-prompts-skill/LICENSE) |
+| [ai-image-prompts-skill](skills/ai-image-prompts-skill/SKILL.md) | Vendored / imported | [source](https://github.com/YouMind-OpenLab/ai-image-prompts-skill) | YouMind-OpenLab (bundled copyright notice) | Not recorded | [LICENSE](skills/ai-image-prompts-skill/LICENSE) |
 | [ai-seo](skills/ai-seo/SKILL.md) | Vendored / imported | [source](https://github.com/coreyhaines31/marketingskills) | Not recorded | Not recorded | Not recorded |
 | [ai-ugc-realism](skills/ai-ugc-realism/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
 | [ai-writing-detection](skills/ai-writing-detection/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
@@ -233,7 +233,7 @@ Machine-readable fields and recorded upstream revisions are in [provenance.json]
 | [distribution-101](skills/distribution-101/SKILL.md) | Adapted / source-derived | See source record; not resolved to a verified URL | Not recorded | Not recorded | Not recorded |
 | [dither-background](skills/dither-background/SKILL.md) | Vendored / imported | [source](https://github.com/MengTo/Skills) | Not recorded | Not recorded | Not recorded |
 | [document-processing](skills/document-processing/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
-| [docx](skills/docx/SKILL.md) | Vendored / imported | See source record; not resolved to a verified URL | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/docx/LICENSE.txt) |
+| [docx](skills/docx/SKILL.md) | Vendored / imported | [source](https://github.com/anthropics/skills) | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/docx/LICENSE.txt) |
 | [domain](skills/domain/SKILL.md) | Vendored / imported | [source](https://github.com/coreyhaines31/makerskills) | Not recorded | Not recorded | Not recorded |
 | [dropback-append-only-ledger](skills/dropback-append-only-ledger/SKILL.md) | Adapted / source-derived | See source record; not resolved to a verified URL | Not recorded | Not recorded | Not recorded |
 | [dropback-bitemporal-truth](skills/dropback-bitemporal-truth/SKILL.md) | Adapted / source-derived | See source record; not resolved to a verified URL | Not recorded | Not recorded | Not recorded |
@@ -573,7 +573,7 @@ Machine-readable fields and recorded upstream revisions are in [provenance.json]
 | [postgres-patterns](skills/postgres-patterns/SKILL.md) | Vendored / imported | [source](https://github.com/affaan-m/ECC) | Not recorded | Not recorded | Not recorded |
 | [powerbi-expert](skills/powerbi-expert/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | PCL Team | Apache-2.0 | Not recorded |
 | [powerbi-modeling](skills/powerbi-modeling/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
-| [pptx](skills/pptx/SKILL.md) | Vendored / imported | See source record; not resolved to a verified URL | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/pptx/LICENSE.txt) |
+| [pptx](skills/pptx/SKILL.md) | Vendored / imported | [source](https://github.com/anthropics/skills) | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/pptx/LICENSE.txt) |
 | [pre-launch-site-check](skills/pre-launch-site-check/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
 | [pre-mortem](skills/pre-mortem/SKILL.md) | Created locally (recorded claim, unverified) | Local creation claim | Not recorded | Not recorded | Not recorded |
 | [premium-frontend-ui](skills/premium-frontend-ui/SKILL.md) | Vendored / imported | [source](https://github.com/github/awesome-copilot) | Not recorded | Not recorded | Not recorded |
@@ -761,7 +761,7 @@ Machine-readable fields and recorded upstream revisions are in [provenance.json]
 | [testing-for-xxe-injection-vulnerabilities](skills/testing-for-xxe-injection-vulnerabilities/SKILL.md) | Vendored / imported | [source](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | mahipal | Apache-2.0 | [LICENSE](skills/testing-for-xxe-injection-vulnerabilities/LICENSE) |
 | [testing-prompt-injection-in-rag-pipelines](skills/testing-prompt-injection-in-rag-pipelines/SKILL.md) | Vendored / imported | [source](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | mahipal | Apache-2.0 | [LICENSE](skills/testing-prompt-injection-in-rag-pipelines/LICENSE) |
 | [tetlock-superforecasting](skills/tetlock-superforecasting/SKILL.md) | Adapted / source-derived | See source record; not resolved to a verified URL | Not recorded | Not recorded | Not recorded |
-| [text-to-image-prompt-optimizer](skills/text-to-image-prompt-optimizer/SKILL.md) | Vendored / imported | See source record; not resolved to a verified URL | manzxiao (bundled copyright notice) | Not recorded | [LICENSE](skills/text-to-image-prompt-optimizer/LICENSE) |
+| [text-to-image-prompt-optimizer](skills/text-to-image-prompt-optimizer/SKILL.md) | Vendored / imported | [source](https://github.com/manzxiao/text-to-image-prompt-optimizer) | manzxiao (bundled copyright notice) | Not recorded | [LICENSE](skills/text-to-image-prompt-optimizer/LICENSE) |
 | [text-to-lottie](skills/text-to-lottie/SKILL.md) | Vendored / imported | [source](https://github.com/diffusionstudio/lottie) | Not recorded | Not recorded | Not recorded |
 | [theme-factory](skills/theme-factory/SKILL.md) | Vendored / imported | [source](https://github.com/anthropics/skills) | Not recorded | Complete terms in LICENSE.txt | [LICENSE.txt](skills/theme-factory/LICENSE.txt) |
 | [threejs](skills/threejs/SKILL.md) | Vendored / imported | [source](https://github.com/MengTo/Skills) | Not recorded | Not recorded | Not recorded |
@@ -845,6 +845,6 @@ Machine-readable fields and recorded upstream revisions are in [provenance.json]
 | [writing-skills](skills/writing-skills/SKILL.md) | Vendored / imported | [source](https://github.com/obra/superpowers) | Not recorded | Not recorded | Not recorded |
 | [x-bookmark-quote-posts](skills/x-bookmark-quote-posts/SKILL.md) | Vendored / imported | [source](https://github.com/MengTo/Skills) | Not recorded | Not recorded | Not recorded |
 | [x-longform-post](skills/x-longform-post/SKILL.md) | Vendored / imported | [source](https://github.com/ericosiu/ai-marketing-skills) | Not recorded | Not recorded | Not recorded |
-| [xlsx](skills/xlsx/SKILL.md) | Vendored / imported | See source record; not resolved to a verified URL | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/xlsx/LICENSE.txt) |
+| [xlsx](skills/xlsx/SKILL.md) | Vendored / imported | [source](https://github.com/anthropics/skills) | Anthropic, PBC (bundled copyright notice) | Proprietary. LICENSE.txt has complete terms | [LICENSE.txt](skills/xlsx/LICENSE.txt) |
 | [youtube-thumbnail](skills/youtube-thumbnail/SKILL.md) | Vendored / imported | [source](https://github.com/charlie947/social-media-skills) | Not recorded | Not recorded | Not recorded |
 | [yt-competitive-analysis](skills/yt-competitive-analysis/SKILL.md) | Vendored / imported | [source](https://github.com/ericosiu/ai-marketing-skills) | Not recorded | Not recorded | Not recorded |
