@@ -30,3 +30,18 @@ python scripts/build-catalog.py --check
 ```
 
 Generate the browsing catalogue after changing bundles or provenance metadata, then check that generated output matches the current inputs. This generator does not update upstream skills or resolve missing authorship and licensing information. See [Contributing](../CONTRIBUTING.md) and [Updating](../docs/UPDATING.md).
+
+## Optional Jev client
+
+The portable client is bundled at `skills/scout-skills/scripts/jev.py`, so copying the complete
+scout-skills bundle also copies the runtime. It uses Python 3.9+ and the standard library.
+See [setup, routing and JSONL contract](../skills/scout-skills/references/jev.md).
+The ranker never calls it automatically.
+
+```sh
+python skills/scout-skills/scripts/jev.py --help
+python skills/scout-skills/scripts/jev.py --state "An example excerpt." --noul relevant="Does it explain testing?" --dry-run
+python -m unittest discover -s tests
+```
+
+The tests mock HTTP: no keys, API spending or network access are required.

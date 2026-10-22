@@ -1,5 +1,24 @@
 # Find a skill, then install the selected bundle
 
+## Agent-assisted setup
+
+Copy the [README's agent prompt](../README.md#paste-this-into-your-agent) into your agent while
+working in the target project's root. It asks the agent to install the complete `scout-skills`
+bundle, preserve local changes, and verify discovery. Setup is complete when the agent can read
+the installed `SKILL.md`, its `references/jev.md`, and its `scripts/jev.py`, and can return a
+coverage map for a sample task. A file copy alone does not verify activation.
+
+Keep the library checkout at a reusable location and record its absolute path in your existing
+project instructions or agent configuration. The installed bundle uses that checkout's ranker;
+it can fall back to direct file search if the ranker is unavailable. No global slash command is
+required. Use the skill's name through your agent's supported invocation mechanism, or ask:
+
+```text
+Use scout-skills at mid extent for this task. Search descriptions and bodies, read matching references, keep every contributor, and report cited coverage and gaps before proceeding.
+```
+
+## Manual setup
+
 Clone the library and search it with Python 3. The ranker uses the standard library; it needs no API key, package install, or network connection after cloning.
 
 ```sh
@@ -34,6 +53,33 @@ Copy-Item -LiteralPath 'C:\path\to\scout-skills\skills\ab-testing' -Destination 
 Copy the whole selected directory, including references, scripts, templates, and notices. Copying only `SKILL.md` can break relative links. Copying instructions does not install their Python or Node dependencies, configure services, grant permissions, or resolve licensing requirements. Read the selected skill's setup instructions.
 
 Claude Code, Codex, and Cursor have different discovery rules. The example above targets Claude Code only; use the directory and activation procedure documented by your actual agent. Do not assume every agent reads `.claude/skills`, `.agents/skills`, or `.cursor/skills` interchangeably.
+
+For the scouting workflow itself, replace `ab-testing` with `scout-skills` in the examples.
+Codex supports project skills in `.agents/skills`; Claude Code uses `.claude/skills`; Cursor
+supports `.cursor/skills`. Confirm the path for your installed version and reload or start a
+new session when required. See the official [Claude Code](https://code.claude.com/docs/en/skills),
+[Codex](https://developers.openai.com/codex/skills), and
+[Cursor](https://cursor.com/docs/context/skills) documentation. These paths describe each agent's
+discovery, independently of the ranker's Claude-oriented flag below.
+
+## Optional Jev
+
+The complete scout-skills bundle includes a standard-library-only Jev client, so no extra
+Python package installation is needed. It requires Python 3.9+. First run from the checkout:
+
+```sh
+python skills/scout-skills/scripts/jev.py --state "This excerpt explains keyboard focus." --noul contributes="Does this excerpt give an accessibility rule?" --dry-run
+```
+
+This must succeed without a key or network access. To enable live calls, follow
+[Jev setup and routing](../skills/scout-skills/references/jev.md). Configure your own key locally,
+check current account terms, and authorize the data that may leave your machine. Setup does
+not grant API spending permission. With Jev unavailable or disabled, local search and scouting
+remain usable. Jev is a separate bounded-decision step, not a hidden network mode of the ranker.
+
+For updates, fetch and review changes in the reusable checkout, then compare and replace only
+the selected complete bundle. Preserve local adaptations and notices using
+[the upstream update procedure](UPDATING.md). Re-run discovery and the dry run afterward.
 
 ## Read the ranker's loaded-tree flag correctly
 

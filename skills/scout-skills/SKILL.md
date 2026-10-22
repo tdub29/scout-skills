@@ -1,77 +1,84 @@
 ---
 name: scout-skills
-description: "Which already-installed local skill fits this task"
+description: Find and read local skill guidance for a task, report coverage and gaps, and route bounded decisions to optional Jev support.
 ---
 
 # Scout Skills
 
-Prefer the `/scout-skills` slash command when it is available: it spawns a dedicated Explore
-subagent as a blocking gate and already carries the disk-search instructions. This skill is the
-fallback for when the command is not reachable.
+Find what installed skills teach before choosing an approach. Return cited guidance for each
+sub-question, keeping every contributor. This bundle is self-contained; no slash command or
+user-specific workspace is required.
 
-## Search the disk, not the context listing
+## 1. Set extent and locate the library
 
-**Do not scout from the skills list in your system context.** That listing is over budget and gets
-truncated to bare names, so it cannot tell you what any skill does. Measured 2026-08-27: the full
-`name: description` listing for the loaded roster is 588,453 chars against a 40,000-char budget at
-1M context, a 14.7x overshoot, so the CLI silently drops every description.
+The first token sets extent: `mid` (default) covers direct guidance; `high` also covers applicable
+analogies; `max` also closes uncovered questions by finding or building skills. The remaining
+text is the task. If empty, use the current task.
 
-The same skills carry their full descriptions on disk, at zero context cost. Search them with the
-local ranker rather than by hand:
+Locate the Scout Skills checkout from the user's setup. Run its ranker by absolute path from
+the owning project root. The ranker searches its checkout and home Claude tree, not the current
+project. Also search the actual project's configured skill directories. If the ranker is absent,
+search those directories directly and report that limitation. Never guess an installation path.
 
-```
-python "scripts/find-local-skill.py" "<the task, in plain words>" --top 12
-```
+## 2. Search descriptions AND bodies
 
-It indexes every SKILL.md across all four local trees, ranks by term frequency over the
-description with a name-match and phrase boost, prints which trees hold each hit and whether it is
-INVOCABLE, and caches the parsed index so a second query is instant. Add `--json` to post-process,
-`--clusters` for the full name-collision report, `--rebuild` after installing a skill. Stdlib only,
-no key, no network.
+Split the task into sub-questions first. Search two or three phrasings:
 
-Run it two or three times with different phrasings (the capability, the artifact, the verb): it
-does no synonym expansion. Then read the winning SKILL.md frontmatter in full before recommending
-it. If the script fails, fall back to a raw grep and say so:
-
-```
-grep -H -E '^(name|description):' "skills/"*/SKILL.md
+```sh
+python /absolute/path/to/scout-skills/scripts/find-local-skill.py "task in plain words" --top 12
 ```
 
-## Then confirm it is invocable
+This command uses deterministic local code, needs no key, and makes no network calls.
+Names and descriptions produce leads, not a coverage verdict. Context listings may omit
+descriptions; use files on disk. Search concrete nouns and synonyms across bodies and references:
 
-`.agents/skills/` is a description source, not a loaded tree. A skill that exists only there cannot
-be called with the `Skill` tool. Before recommending one, confirm the same directory name also
-exists in a loaded tree:
+```sh
+rg -n -i --glob '*.md' 'footer|colophon|contact section' /absolute/path/to/skills
+```
 
-- `.claude/skills/<name>\`
-- `~/.claude/skills/<name>\`
+Read matching sections and linked references. Extract concrete rules, defaults and anti-patterns
+with `path:line` citations. Search beyond the initial top results when a sub-question lacks coverage.
+A zero-result description search does not prove a skill is missing.
 
-## Collisions: return one winner
+## 3. Keep contributors and verify discovery
 
-About a third of the roster shares a head noun (`design`, `resume`, `seo`, `power-bi`, `security`,
-`scroll`), and many names say nothing alone (`bro`, `rfr`, `last30days`, `paste`, `seam-craft`,
-`refero`). When candidates cluster, read all their descriptions and return the one that fits, plus a
-clause on why the near-misses lost. Do not dump the cluster.
+Read overlapping candidates. Choose at most one lead workflow, and retain every other skill with
+useful guidance. Report conflicting rules rather than silently discarding one. There is no quota
+on contributors. A rank is a lexical match, not proof of quality or truth.
 
-## Installing or building something new
+The ranker's `invocable` flag recognizes only its checkout's and home Claude skill trees. It does
+not inspect an active session, Codex, Cursor, or a different project's discovery state. Verify
+discovery with the actual agent's supported mechanism. If installing, copy the whole selected
+bundle, preserve notices and existing local changes, and follow that agent's current setup docs.
 
-For skills that are NOT installed locally, use the `find-skills` skill, which searches the skills.sh
-registry. Note that it searches the registry, not these local mirrors, so run the disk grep above
-first: the skill is usually already here.
+## 4. Route work by phase
 
-At `max` extent a gap is never left to memory. Read each registry candidate's real SKILL.md (a
-guessed raw URL that 404s is not a read) and judge fit. If none fits, build the skill from the best
-sources online: primary docs, then papers with data, then high-signal repos, then evidenced
-practitioner write-ups; three independent sources minimum, every rule cited, one fresh verifier
-before install. The output is an installed skill, not a notes or knowledge file.
+Keep file reads, retrieval, arithmetic, exact matches, validation and orchestration in code.
+Keep research, generation, explanations and open-ended reasoning with the agent.
+When optional Jev is configured and external data transfer is authorized, use it for repeated
+bounded judgments over evidence already collected: yes/no checks, choices among known options,
+and ratings against an explicit rubric. It cannot retrieve missing evidence or produce prose.
+Keep decisions already settled by exact code in code.
 
-At `max`, **read the *MAX: install, else build* section of `~/.claude/commands/scout-skills.md` in
-full before acting**; this summary is not the procedure. Two parts get skipped most:
+Read [Jev setup and routing](references/jev.md) before the first Jev call. The bundled
+`scripts/jev.py` supports single items, JSONL batches and offline `--dry-run`. It reads only
+`TYPESAFE_API_KEY` from the environment. It never searches another project's credentials.
+Without a key or transfer permission, continue locally and name that mode; installation itself
+does not authorize API spend or sharing data. Preserve uncertain and failed rows for agent review.
+Typed answers constrain shape, not truth. They do not certify a skill or replace source checking.
 
-- **The paper search is mandatory** when the domain has a literature. Health, nutrition, medicine
-  and exercise go to PubMed E-utilities and Europe PMC; CS to arXiv and Semantic Scholar; the rest
-  to OpenAlex. All key-free. Cite PMID, DOI or arXiv id for papers actually read.
-- **A delegated build carries the procedure.** The brief names that section, and the agent reports
-  the paper queries it ran and papers read versus cited. Without that report the gap is still open.
+## 5. Return coverage, then act
 
-Do not report `scout-skills` unavailable. This entry exists so older prompts resolve.
+Return the extent, optional lead, contributor count, per-question cited rules, conflicts and gaps.
+Mark uncovered judgments as such. At `mid`/`high`, give each gap a concrete closure route.
+Then apply the guidance to the original task. If delegating scouting, wait for its report before
+making the decisions it is supposed to inform; use the owning project's root as the worker cwd.
+
+At `max`, search the registry for every gap and read actual candidate bundles before deciding
+fit. If none fits, research primary sources and relevant papers, then build a complete skill
+with cited rules and references. Use at least three independent sources, including primary docs
+or research where available. Screen papers for retractions, design and conflicts; keep uncertainty
+visible. A fresh reviewer checks the draft against its sources before installation. Build at most
+three skills per run; report remaining gaps explicitly and use the user's queue if authorized.
+If research, installation or review is unavailable, report the incomplete gap rather than claiming
+`max` completion. This procedure does not require a private home-directory command.
