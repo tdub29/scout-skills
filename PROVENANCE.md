@@ -11,6 +11,12 @@ This catalogue separates recorded origins from authorship claims. A bundle being
 
 No skill bundle is certified as an original creation by this audit. The search/ranking script is maintained as project tooling separately from these skill bundles. Upstream revisions below are recorded evidence, not verified baselines.
 
+On October 22, 2026, the `scout-skills` instructions were revised for self-contained coverage
+scouting and optional Jev routing. The bundle gained project-maintained `scripts/jev.py` and
+`references/jev.md`, implemented against the linked TypeSafe API documentation. These additions
+are project-owned contributions under the root MIT license. The pre-existing instructions'
+unresolved origin remains unresolved; this update does not establish their original authorship.
+
 ## Bundle counts
 
 - Vendored / imported: 542

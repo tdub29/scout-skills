@@ -25,6 +25,7 @@ python scripts/build-catalog.py
 python scripts/build-catalog.py --check
 python scripts/find-local-skill.py --rebuild
 python scripts/find-local-skill.py --selftest
+python -m unittest discover -s tests
 ```
 
 The catalogue generator produces the browsing pages from the current collection. Commit regenerated output with the source change; `--check` should report no drift. These commands validate the catalogue and local search behavior, not the correctness or external dependencies of every skill. Check changed relative links and run any bundle-specific validation separately.

@@ -9799,7 +9799,7 @@
       "source_type": "local",
       "recorded_source": "local-copy (global(~/.claude))",
       "book": null,
-      "source_note": null,
+      "source_note": "2026-10-22: instructions revised for self-contained coverage scouting and optional Jev routing; project-maintained scripts/jev.py and references/jev.md added under root MIT license, based on linked TypeSafe API documentation. Earlier instruction origin remains unresolved.",
       "upstream_url": null,
       "recorded_upstream_revision": null,
       "revision_verified": false,

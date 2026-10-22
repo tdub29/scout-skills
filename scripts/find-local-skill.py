@@ -308,12 +308,12 @@ def render_clusters(index, rows):
 def render(query, rows, rebuilt):
     if not rows:
         return ('no local skill matches "%s".\n'
-                'Nothing on disk covers it - check the skills.sh registry with the find-skills '
-                'skill before concluding the capability is missing.' % query)
+                'No name/description match cleared the lexical floor. Search skill bodies and '
+                'references before checking the registry or concluding coverage is missing.' % query)
     out = ['%d local skill(s) match "%s"%s:' % (len(rows), query, ' (index rebuilt)' if rebuilt else ''), '']
     groups = clusters(rows)
     for r in rows:
-        flag = 'INVOCABLE' if r['invocable'] else 'NOT INVOCABLE (description source only, .agents tree)'
+        flag = 'INVOCABLE (Claude tree; verify session)' if r['invocable'] else 'NOT INVOCABLE by this Claude-tree check'
         desc = r['description'] or '(no description in frontmatter)'
         if len(desc) > 300:
             desc = desc[:297] + '...'
@@ -322,13 +322,14 @@ def render(query, rows, rebuilt):
         out.append('    %s' % desc)
         out.append('')
     if groups:
-        out.append('COLLISION CLUSTERS (same head noun - read both before picking):')
+        out.append('COLLISION CLUSTERS (same head noun - read all; keep every contributor):')
         for head, members in sorted(groups.items()):
             out.append('  %s: %s' % (head, ', '.join(m['name'] for m in members)))
         out.append('')
     if not any(r['invocable'] for r in rows):
-        out.append('NOTE: every hit lives only in .agents/skills, which is a description source, '
-                   'not a loaded tree. Copy the bundle into .claude/skills before calling it.')
+        out.append('NOTE: no hit is in a Claude tree recognized by this ranker. '
+                   'Copy the bundle into your actual agent\'s supported skill directory and '
+                   'verify discovery there. Codex and Cursor loading are not inspected.')
     return '\n'.join(out)
 
 

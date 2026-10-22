@@ -2,6 +2,15 @@
 
 Find the right local agent skill without loading the whole library into context. Scout Skills combines a Python search and ranking tool with a curated collection of reusable skill bundles for Claude Code, Codex, and Cursor.
 
+## Paste this into your agent
+
+```text
+Set up https://github.com/tdub29/scout-skills for this project and my agent. Read docs/GETTING_STARTED.md, keep a reusable checkout and record its location, install the complete scout-skills bundle using my agent's supported discovery path, preserve existing instructions and local changes, and verify discovery. Use it to find and read every skill contributing concrete guidance to my task, report coverage and gaps, and install only needed complete bundles. Keep search offline. Explain optional Jev setup and bounded-decision routing; enable API calls only within my authorization for spend and data sharing. Never request secrets in chat.
+```
+
+This asks your agent to do the setup. It is not a shell command. See
+[Getting started](docs/GETTING_STARTED.md) for manual setup, verification and updates.
+
 ## Start here
 
 | I want to... | Go to |
@@ -9,6 +18,7 @@ Find the right local agent skill without loading the whole library into context.
 | Browse skills by topic | [Category catalog](docs/catalog/README.md) |
 | Search the collection from a terminal | [Quick start](#quick-start) |
 | Use a skill in a project | [Getting started](docs/GETTING_STARTED.md) |
+| Route bounded decisions to optional Jev | [Jev setup and routing](skills/scout-skills/references/jev.md) |
 | Find the original publisher or review updates | [Upstream update guide](docs/UPDATING.md) |
 | Understand authorship and licenses | [Provenance](PROVENANCE.md) and [third-party notices](THIRD_PARTY_NOTICES.md) |
 
@@ -25,6 +35,11 @@ python scripts/find-local-skill.py "landing page"
 ```
 
 Open a matching bundle's `SKILL.md`, then follow the [single-skill setup guide](docs/GETTING_STARTED.md). Searching the library does not install or activate a skill.
+
+The [scout-skills bundle](skills/scout-skills/SKILL.md) adds body/reference searches and a
+coverage map across contributors. Optional Jev handles repeated typed judgments over supplied
+evidence; its bundled Python client supports dry runs and JSONL batches. It requires your own
+API key and authorization to send data. Local search works without it.
 
 ## How discovery works
 
@@ -73,6 +88,7 @@ Catalog entries link to recorded original sources. A missing source or baseline 
 python scripts/build-catalog.py
 python scripts/build-catalog.py --check
 python scripts/find-local-skill.py --selftest
+python -m unittest discover -s tests
 ```
 
 [Contributing](CONTRIBUTING.md) covers source records, complete bundles, and catalog maintenance.
