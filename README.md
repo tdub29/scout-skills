@@ -96,3 +96,7 @@ python -m unittest discover -s tests
 ## License
 
 [MIT](LICENSE) covers project-owned tooling and original contributions. Imported and adapted skills retain their upstream terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## More projects
+
+More of my work and contact details are at [twhite.dev](https://twhite.dev).
