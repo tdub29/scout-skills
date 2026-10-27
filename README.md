@@ -41,6 +41,12 @@ coverage map across contributors. Optional Jev handles repeated typed judgments 
 evidence; its bundled Python client supports dry runs and JSONL batches. It requires your own
 API key and authorization to send data. Local search works without it.
 
+## Search example
+
+![Four local browser automation skills ranked by Scout Skills](docs/images/scout-search-example.jpg)
+
+Selected fields from an actual local JSON search for `browser automation`: skill name, ranking score, source tree and discovery status. The example library has not been installed into a Claude discovery tree; each result reports that status. [Full JSON output](docs/examples/browser-automation.json).
+
 ## How discovery works
 
 ```mermaid
