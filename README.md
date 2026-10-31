@@ -2,6 +2,12 @@
 
 Find the right local agent skill without loading the whole library into context. Scout Skills combines a Python search and ranking tool with a curated collection of reusable skill bundles for Claude Code, Codex, and Cursor.
 
+## Search example
+
+![Four local browser automation skills ranked by Scout Skills](docs/images/scout-search-example.jpg)
+
+Selected fields from an actual local JSON search for `browser automation`: skill name, ranking score, source tree and discovery status. The example library has not been installed into a Claude discovery tree; each result reports that status. [Full JSON output](docs/examples/browser-automation.json).
+
 ## Paste this into your agent
 
 ```text
@@ -40,12 +46,6 @@ The [scout-skills bundle](skills/scout-skills/SKILL.md) adds body/reference sear
 coverage map across contributors. Optional Jev handles repeated typed judgments over supplied
 evidence; its bundled Python client supports dry runs and JSONL batches. It requires your own
 API key and authorization to send data. Local search works without it.
-
-## Search example
-
-![Four local browser automation skills ranked by Scout Skills](docs/images/scout-search-example.jpg)
-
-Selected fields from an actual local JSON search for `browser automation`: skill name, ranking score, source tree and discovery status. The example library has not been installed into a Claude discovery tree; each result reports that status. [Full JSON output](docs/examples/browser-automation.json).
 
 ## How discovery works
 
