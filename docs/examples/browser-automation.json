@@ -1,0 +1,98 @@
+{
+  "query": "browser automation",
+  "hits": [
+    {
+      "name": "browser-qa",
+      "score": 19.0,
+      "why": [
+        "phrase in description",
+        "browser in name",
+        "browser x1",
+        "automation x1"
+      ],
+      "description": "Run automated post-deploy UI verification with a browser automation MCP (claude-in-chrome, Playwright, or Puppeteer): console-error and Core Web Vitals smoke checks, form and auth-flow interaction tests, screenshot visual regression across three breakpoints, and axe-core accessibility audits ending in a SHIP / DO-NOT-SHIP verdict. Use when testing a deployed feature on staging or preview, before shipping frontend changes, reviewing a frontend PR, or checking responsive layout and accessibility.",
+      "trees": [
+        "skills"
+      ],
+      "invocable": false
+    },
+    {
+      "name": "browser-use-cloud",
+      "score": 19.0,
+      "why": [
+        "phrase in description",
+        "browser in name",
+        "browser x8",
+        "automation x1"
+      ],
+      "description": "> Documentation reference for using Browser Use Cloud \u00e2\u20ac\u201d the hosted API and SDK for browser automation. Use this skill whenever the user needs help with the Cloud REST API (v2 or v3), browser-use-sdk (Python or TypeScript), X-Browser-Use-API-Key authentication, cloud sessions, browser profiles, profile sync, CDP WebSocket connections, stealth browsers, residential proxies, CAPTCHA handling, webhooks, workspaces, skills marketplace, liveUrl streaming, pricing, or integration patterns (chat UI, subagent, adding browser tools to existing agents). Also trigger for questions about n8n/Make/Zapier integration, Playwright/ Puppeteer/Selenium on cloud infrastructure, or 1Password vault integration. Do NOT use this for the open-source Python library (Agent, Browser, Tools config) \u00e2\u20ac\u201d use the open-source skill instead.",
+      "trees": [
+        "skills"
+      ],
+      "invocable": false
+    },
+    {
+      "name": "dev-browser",
+      "score": 19.0,
+      "why": [
+        "phrase in description",
+        "browser in name",
+        "browser x1",
+        "automation x1"
+      ],
+      "description": "Browser automation that keeps page state per call",
+      "trees": [
+        "skills"
+      ],
+      "invocable": false
+    },
+    {
+      "name": "agent-browser",
+      "score": 10.1,
+      "why": [
+        "browser in name",
+        "browser x1",
+        "1/2 terms"
+      ],
+      "description": "Browser CLI for agents, plus Electron desktop apps",
+      "trees": [
+        "skills"
+      ],
+      "invocable": false
+    }
+  ],
+  "clusters": {
+    "browser": [
+      {
+        "name": "browser-qa",
+        "score": 19.0,
+        "why": [
+          "phrase in description",
+          "browser in name",
+          "browser x1",
+          "automation x1"
+        ],
+        "description": "Run automated post-deploy UI verification with a browser automation MCP (claude-in-chrome, Playwright, or Puppeteer): console-error and Core Web Vitals smoke checks, form and auth-flow interaction tests, screenshot visual regression across three breakpoints, and axe-core accessibility audits ending in a SHIP / DO-NOT-SHIP verdict. Use when testing a deployed feature on staging or preview, before shipping frontend changes, reviewing a frontend PR, or checking responsive layout and accessibility.",
+        "trees": [
+          "skills"
+        ],
+        "invocable": false
+      },
+      {
+        "name": "browser-use-cloud",
+        "score": 19.0,
+        "why": [
+          "phrase in description",
+          "browser in name",
+          "browser x8",
+          "automation x1"
+        ],
+        "description": "> Documentation reference for using Browser Use Cloud \u00e2\u20ac\u201d the hosted API and SDK for browser automation. Use this skill whenever the user needs help with the Cloud REST API (v2 or v3), browser-use-sdk (Python or TypeScript), X-Browser-Use-API-Key authentication, cloud sessions, browser profiles, profile sync, CDP WebSocket connections, stealth browsers, residential proxies, CAPTCHA handling, webhooks, workspaces, skills marketplace, liveUrl streaming, pricing, or integration patterns (chat UI, subagent, adding browser tools to existing agents). Also trigger for questions about n8n/Make/Zapier integration, Playwright/ Puppeteer/Selenium on cloud infrastructure, or 1Password vault integration. Do NOT use this for the open-source Python library (Agent, Browser, Tools config) \u00e2\u20ac\u201d use the open-source skill instead.",
+        "trees": [
+          "skills"
+        ],
+        "invocable": false
+      }
+    ]
+  }
+}

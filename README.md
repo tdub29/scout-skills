@@ -2,6 +2,12 @@
 
 Find the right local agent skill without loading the whole library into context. Scout Skills combines a Python search and ranking tool with a curated collection of reusable skill bundles for Claude Code, Codex, and Cursor.
 
+## Search example
+
+![Four local browser automation skills ranked by Scout Skills](docs/images/scout-search-example.jpg)
+
+Selected fields from an actual local JSON search for `browser automation`: skill name, ranking score, source tree and discovery status. The example library has not been installed into a Claude discovery tree; each result reports that status. [Full JSON output](docs/examples/browser-automation.json).
+
 ## Paste this into your agent
 
 ```text
@@ -96,3 +102,7 @@ python -m unittest discover -s tests
 ## License
 
 [MIT](LICENSE) covers project-owned tooling and original contributions. Imported and adapted skills retain their upstream terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## More projects
+
+More of my work and contact details are at [twhite.dev](https://twhite.dev).
