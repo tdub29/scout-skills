@@ -22,29 +22,25 @@ search those directories directly and report that limitation. Never guess an ins
 
 ## 2. Search descriptions AND bodies
 
-Split the task into sub-questions first. Search two or three phrasings:
+Split the task two ways first: (a) **domain mechanics** and (b) **underlying problem classes and mental models** (for example: target/label design, data-quality root cause, statistical family, base rates and calibration, data-mining bias, expected-value decision utility, train/serve skew). Search both domain phrasings and **domain-free mental-model phrasings**:
 
 ```sh
 python /absolute/path/to/scout-skills/scripts/find-local-skill.py "task in plain words" --top 12
 ```
 
 This command uses deterministic local code, needs no key, and makes no network calls.
-Names and descriptions produce leads, not a coverage verdict. Context listings may omit
-descriptions; use files on disk. Search concrete nouns and synonyms across bodies and references:
+Domain nouns (`NFL`, `sports`, `React`, `Power BI`) crowd top results with domain-named skills and push foundational or cross-domain hubs out of shortlists, so always pair domain queries with plain-English problem-class queries.
+Names and descriptions produce leads, not a coverage verdict. Router and book hubs store their concrete frameworks inside `references/`, not in frontmatter descriptions. Search concrete problem-class terms and synonyms across `SKILL.md` bodies and `references/` (mandatory, never skip):
 
 ```sh
-rg -n -i --glob '*.md' 'footer|colophon|contact section' /absolute/path/to/skills
+rg -n -i --glob '*.md' 'target.*label|expected value|data quality|data-mining|base rate' /absolute/path/to/skills
 ```
 
-Read matching sections and linked references. Extract concrete rules, defaults and anti-patterns
-with `path:line` citations. Search beyond the initial top results when a sub-question lacks coverage.
-A zero-result description search does not prove a skill is missing.
+Read matching sections and follow router hubs into every relevant file under `references/`. Extract concrete rules, defaults and anti-patterns with `path:line` citations. Search beyond the initial top results when a sub-question lacks coverage. A zero-result description search does not prove a skill is missing.
 
 ## 3. Keep contributors and verify discovery
 
-Read overlapping candidates. Choose at most one lead workflow, and retain every other skill with
-useful guidance. Report conflicting rules rather than silently discarding one. There is no quota
-on contributors. A rank is a lexical match, not proof of quality or truth.
+Read overlapping candidates and full `references/` workflows. Choose at most one lead workflow, and retain every other skill with useful guidance. **Domain specificity is not depth:** never pick a narrow domain checklist as lead and dismiss deeper methodological or router hubs as "over-routing" or demote them to one-line footnotes without reading their matching `references/` files. Report conflicting rules rather than silently discarding one. There is no quota on contributors. A rank is a lexical match, not proof of quality or truth.
 
 The ranker's `invocable` flag recognizes only its checkout's and home Claude skill trees. It does
 not inspect an active session, Codex, Cursor, or a different project's discovery state. Verify
@@ -69,10 +65,7 @@ Typed answers constrain shape, not truth. They do not certify a skill or replace
 
 ## 5. Return coverage, then act
 
-Return the extent, optional lead, contributor count, per-question cited rules, conflicts and gaps.
-Mark uncovered judgments as such. At `mid`/`high`, give each gap a concrete closure route.
-Then apply the guidance to the original task. If delegating scouting, wait for its report before
-making the decisions it is supposed to inform; use the owning project's root as the worker cwd.
+Return the extent, exact queries and body greps run, optional lead, contributor count, per-question cited rules, conflicts and gaps. Mark uncovered judgments as such. At `mid`/`high`, give each gap a concrete closure route. Then apply the guidance to the original task. If delegating scouting, wait for its report before making the decisions it is supposed to inform; use the owning project's root as the worker cwd. At `max`, do not start implementation edits while a drafted gap skill remains unverified or uninstalled.
 
 At `max`, search the registry for every gap and read actual candidate bundles before deciding
 fit. If none fits, research primary sources and relevant papers, then build a complete skill
